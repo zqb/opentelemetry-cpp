@@ -8,6 +8,25 @@ Status](https://github.com/open-telemetry/opentelemetry-cpp/actions/workflows/ci
 
 The C++ [OpenTelemetry](https://opentelemetry.io/) client.
 
+## Project Status
+
+| Signal  | Status                 | Project                                                                  |
+| ------- | ---------------------- | ------------------------------------------------------------------------ |
+| Traces  | Release Candidate      | [1.0.0](https://github.com/open-telemetry/opentelemetry-cpp/milestone/9) |
+| Metrics | Development paused [1] | N/A                                                                      |
+| Logs    | Experimental [2]       | N/A                                                                      |
+
+* [1]: The development of the metrics API and SDK has paused due to limited development resources, prioritization of a stable Traces release, and waiting for availability of stable Metrics ( API + SDK ) design from the OpenTelemetry specification. The current implementation can be included in build by setting `ENABLE_METRICS_PREVIEW` preprocessor macro.
+* [2]: The current Log Signal Implementation is Experimental, and will change as the current OpenTelemetry Log specification matures. The current implementation can be included in build by setting `ENABLE_LOGS_PREVIEW` preprocessor macro.
+
+## OpenTelemetry Specification Compatibility Matrix
+
+| API Version | Core version | Contrib Version         |
+| ----------- |--------------|-------------------------|
+| 1.0.0       | 1.0.0-rc4    | N/A [1]                 |
+
+* [1]: We don't have releases for opentelemetry-cpp contrib repo. This may change in future.
+
 ## Supported C++ Versions
 
 Code shipped from this repository generally supports the following versions of
@@ -28,11 +47,16 @@ of the current project.
 
  Our CI pipeline builds and tests on following `x86-64` platforms:
 
-* ubuntu-18.04 (Default GCC Compiler - 7.5.0)
-* ubuntu-18.04 (GCC 4.8 with -std=c++11 flag)
-* ubuntu-20.04 (Default GCC Compiler - 9.3.0 with -std=c++20 flags)
-* macOS 10.15 (Xcode 12.2)
-* Windows Server 2019 (Visual Studio Enterprise 2019)
+| Platform                                                            |   Build type  |
+|---------------------------------------------------------------------|---------------|
+| ubuntu-18.04 (Default GCC Compiler - 7.5.0)                         | CMake, Bazel  |
+| ubuntu-18.04 (GCC 4.8 with -std=c++11 flag)                         | CMake [1]     |
+| ubuntu-20.04 (Default GCC Compiler - 9.3.0 with -std=c++20 flags)   | CMake, Bazel  |
+| macOS 10.15 (Xcode 12.2)                                            | Bazel         |
+| Windows Server 2019 (Visual Studio Enterprise 2019)                 | CMake, Bazel  |
+
+[1]: Bazel build is disabled for GCC 4.8, as GRPC library ( required by OTLP expoter)
+  doesn't build with this compiler. CMake build won't build OTLP exporter with GCC 4.8.
 
 In general, the code shipped from this repository should build on all platforms
 having C++ compiler with [supported C++ standards](#supported-c-versions).
